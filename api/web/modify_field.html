@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" type="text/css" href="./lib/css/swiper-3.4.2.min.css" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css"/>
+    <link rel="stylesheet" type="text/css" href="./lib/css/layer.css"/>
+    <title>修改信息</title>
+    <script src="./lib/js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./lib/js/jquery.base64.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./lib/js/layer.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<div class="withdraw_title" style="display:none;">
+    <a href="javascript:location.href='safe_center.html'">
+        <i class="icon"></i>
+    </a>
+    <span></span>
+</div>
+<!--页面主体部分-->
+<div class="withdraw_content">
+    <p class="no_fee"></p>
+    <p class="txed">
+        <span class="txed_title"></span>
+        <input type="text" id="field_value" />
+
+    </p>
+
+    <button class="withdraw_btn">保 存</button>
+</div>
+
+</body>
+<!--头部-->
+<script src="./lib/js/RainbowBridge.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/loading.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/modify_field.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+    var hash = this.location.hash.slice(1);
+    var fieldNames = {real_name:'真实姓名',id_card:'身份证号',bank_number:'银行卡',alipay:'支付宝',tenpay:'财付通'};
+    $('.withdraw_title span').text('修改'+fieldNames[hash]);
+    $('.txed_title').text(fieldNames[hash]);
+    setTitle(".withdraw_title", {'title':'修改' + fieldNames[hash],"theme":"1"});
+</script>
+</html>

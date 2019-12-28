@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <meta content="投呗用户中心,投呗理财管理" name="Keywords">
+    <meta content="“投呗”用户中心包含：平台账户充值提现，银行卡信息管理，查看投资记录、资金明细、奖励优惠等信息。" name="description">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0" />
+    <meta name="format-detection" content="telephone=no, email=no" />
+    <link rel="stylesheet" href="./css/common.css" />
+    <link rel="stylesheet" type="text/css" href="./css/index.css?v=1.2.1"/>
+    <link rel="stylesheet" type="text/css" href="./css/mobileSelect.css?v=1.2.1"/>
+    <link rel="stylesheet" type="text/css" href="./lib/css/layer.css"/>
+    <script src="./lib/js/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./lib/js/jquery.base64.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./lib/js/layer.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/mobileSelect.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./js/wapframwork.js" type="text/javascript" charset="utf-8"></script>
+    <style>
+        code{
+            margin: 0 auto;
+            width: 50%;
+            display: block;
+
+            color: #ce8483;
+        }
+        #roll_in input,#roll_out input{
+            display: block;
+            width: 50%;
+            font-size: 0.3rem;
+            margin: 0 auto;
+            margin-top: 0.5rem;
+            border: 1px solid #ccc;
+            padding: 0.2rem;
+            border-radius: 3px;
+            padding-left:5px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s
+        }
+        #roll_in button,#roll_out button {
+            display: block;
+            margin: 0 auto;
+            margin-top: 50px;
+            width: 4rem; /* 宽度 */
+            height: 40px; /* 高度 */
+            border-width: 0px; /* 边框宽度 */
+            border-radius: 5px; /* 边框半径 */
+            background: #1E90FF; /* 背景颜色 */
+            cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
+            outline: none; /* 不显示轮廓线 */
+            font-family: Microsoft YaHei; /* 设置字体 */
+            color: white; /* 字体颜色 */
+            font-size: 17px; /* 字体大小 */
+        }
+        #roll_out button {
+            margin-top: 0.6rem;
+        }
+        #roll_out input {
+            margin-top: 0.2rem;
+        }
+    </style>
+</head>
+<body>
+<!--页面头部-->
+<div class="my_header">
+    <div class="my_headertop">
+        <!-- <a href="notification.html#personal" class="my_iconmessage"><i ></i></a> -->
+        <span id="user_info"></span>
+        <!-- <a href="setting.html" class="my_iconsetting"><i ></i></a> -->
+    </div>
+    <div class="my_headercenter">
+        <p class="account_type"></p>
+        <p><!--张三--></p>
+        <p class="num"><span id="balance_num"></span><span id="balance_dec" class="num_deci"></span></p>
+    </div>
+    <div class="my_headerbottom">
+        <div class="left">
+            <p>我的本金&nbsp;&nbsp;(元)</p>
+            <p class="num"><span id="waitNum_num"></span><span id="waitNum_dec" class="num_deci">999999</span></p>
+        </div>
+        <div class="right">
+            <p>累计收益&nbsp;&nbsp;(元)</p>
+            <p class="num"><span id="returnIn_num"></span><span id="returnIn_dec" class="num_deci">99999</span></p>
+        </div>
+    </div>
+	
+</div>
+<!--页面主体内容部分-->
+<div class="my_content">
+    <div class="my_content_top">
+        <img class="ct_bg" src="./img/ct_bg.png" alt="" />
+        <div class="left" id="recharge_btn">
+            <i class="icon_charge"></i>
+            <a href="javascript:;" class="bold">转入</a>
+        </div>
+        <div class="right withdraw_btn">
+            <i class="icon_withdraw"></i>
+            <a href="javascript:;" class="bold">转出</a>
+        </div>
+    </div>
+    <div class="my_content_bottom">
+        <ul>
+            <li class="item">
+                <a href="my_team_list.html">
+                    <div>
+								<span class="icon_wrap">
+									<i class="icon icon_tzjl"></i>
+								</span>
+                        <span class="item_detail">我的团队</span>
+                        <i class="icon icon_zhankai"></i>
+                    </div>
+                </a>
+            </li>
+			<li class="item">
+				<a href="roll_in_list.html">
+					<div>
+								<span class="icon_wrap">
+									<i class="icon icon_tzjl"></i>
+								</span>
+						<span class="item_detail">转入记录</span>
+						<i class="icon icon_zhankai"></i>
+					</div>
+				</a>
+			</li>
+            <li class="item">
+                <a href="roll_out_list.html">
+                    <div>
+								<span class="icon_wrap">
+									<i class="icon icon_tzjl"></i>
+								</span>
+                        <span class="item_detail">转出记录</span>
+                        <i class="icon icon_zhankai"></i>
+                    </div>
+                </a>
+            </li>
+            <li class="item">
+                <a href="profit_list.html">
+                    <div>
+								<span class="icon_wrap">
+									<i class="icon_tzmx"></i>
+								</span>
+                        <span class="item_detail">收益明细</span>
+                        <i class="icon icon_zhankai"></i>
+                    </div>
+                </a>
+            </li>
+            <!-- <li class="item">
+                <a href="coupon.html">
+                    <div>
+								<span class="icon_wrap">
+									<i class="icon icon_jlyh"></i>
+								</span>
+                        <span class="item_detail">奖励优惠  </span>
+                        <span class="couponNum"></span>
+                        <i class="icon icon_zhankai"></i>
+                    </div>
+                </a>
+            </li>
+            <li class="item" id="addBank">
+                <a href="javascript:;" >
+                    <div>
+								<span class="icon_wrap">
+									<i class="icon icon_card"></i>
+								</span>
+                        <span class="item_detail">银行卡</span>
+                        <i class="icon icon_zhankai"></i>
+                    </div>
+                </a>
+            </li>
+            <li class="item">
+                <a href="inviteF.html">
+                    <div>
+								<span class="icon_wrap">
+									<i class="icon icon_ewm"></i>
+								</span>
+                        <span class="item_detail">专属二维码</span>
+                        <i class="icon icon_zhankai"></i>
+                    </div>
+                </a>
+            </li> -->
+        </ul>
+    </div>
+
+    <div style="text-align: center" id="rem_link">
+        <p>您的邀请链接：<span></span></p>
+    </div>
+</div>
+<!--	页面底部部分-->
+<ul class="footer" style="background: #fff;">
+    <li class="footer-item">
+        <a href="index.html" class="">
+            <i class="icon icon_index active"></i>
+            <p class="icon_title" style="color: #f23029">首页</p>
+        </a>
+    </li>
+    <li class="footer-item">
+        <a href="invest.html" class="">
+            <i class="icon icon_invest"></i>
+            <p class="icon_title">理财</p>
+        </a>
+    </li>
+    <li class="footer-item">
+        <a href="profit_list.html" class="">
+            <i class="icon icon_activity"></i>
+            <p class="icon_title">收益</p>
+        </a>
+    </li>
+    <li class="footer-item">
+        <a href="safe_center.html" class="">
+            <i class="icon icon_my"></i>
+            <p class="icon_title">我的</p>
+        </a>
+    </li>
+</ul>
+<!--转入弹窗-->
+<div class="myjf_bounce" id="roll_in">
+    <div class="bounce_detail">
+        <div class="title">
+            转入金额
+        </div>
+        <div class="content">
+            <code>注：转入金额1000起</code>
+            <input id="roll_in_val" type="number" placeholder="请输入金额">
+
+            <button>确认转入</button>
+        </div>
+        <img class="close_btn" src="./img/close.png"/>
+    </div>
+</div>
+
+<!--转出弹窗-->
+<div class="myjf_bounce" id="roll_out">
+    <div class="bounce_detail">
+        <div class="title">
+            转出金额
+        </div>
+        <div class="content">
+            <code>注：转出金额300起</code>
+            <input id="roll_out_val" type="number" placeholder="请输出金额">
+
+            <input id="pay_type" type="text" placeholder="转出到" readonly>
+            <button>确认转出</button>
+        </div>
+        <img class="close_btn" src="./img/close.png"/>
+    </div>
+</div>
+
+</body>
+
+<script src="./js/personal.js?v=1.2.1" type="text/javascript" charset="utf-8"></script>
+</html>

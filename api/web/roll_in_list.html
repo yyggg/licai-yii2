@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>转入记录</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no, email=no"/>
+    <link rel="stylesheet" href="./css/common.css" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="./css/index.css"/>
+    <link rel="stylesheet" href="./css/personalCenter.css" type="text/css">
+    <!--插件样式表-->
+    <link rel="stylesheet" href="./lib/css/dropload.css" type="text/css">
+    <script src="./lib/js/jquery-2.1.4.js"></script>
+    <script src="./lib/js/jquery.base64.js"></script>
+    <!--插件-->
+    <script src="./lib/js/dropload.js"></script>
+
+    <script src="./js/wapframwork.js"></script>
+</head>
+<body class="fund_details_page">
+<div class="wrap">
+    <section class="container">
+        <header class="header fund_details_title" style="display: none;">
+            <a href="javascript:history.go(-1)">
+                <i class="icon"></i>
+            </a>
+            <span>转入记录</span>
+            <a href="personal.html">
+                <i class="icon"></i>
+            </a>
+        </header>
+
+        <section id="fund_details_wrap" style="top: 1.38rem;overflow-x: hidden;" class="fund_details_list">
+            <ul id="fund_details_list">
+            </ul>
+        </section>
+    </section>
+</div>
+
+</body>
+
+<!--头部-->
+<script src="./lib/js/RainbowBridge.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    setTitle(".fund_details_title", {'title':'转入记录',"theme":"1"});
+
+    function FundList() {
+        var _$pageno = 0, _$fund_details_list, _$fund_details_wrap;
+        (function () {
+            _$fund_details_list = $("#fund_details_list");
+            _$fund_details_wrap = $("#fund_details_wrap");
+            var dropload = _$fund_details_wrap.dropload({
+                domUp: {
+                    domClass: 'dropload-up',
+                    domRefresh: '<div class="dropload-refresh">↓下拉刷新</div>',
+                    domUpdate: '<div class="dropload-update">↑释放更新</div>',
+                    domLoad: '<div class="dropload-load"><span class="loading"></span>加载中...</div>'
+                },
+                domDown: {
+                    domClass: 'dropload-down',
+                    domRefresh: '<div class="dropload-refresh">↑上拉加载更多</div>',
+                    domLoad: '<div class="dropload-load"><span class="loading"></span>加载中...</div>',
+                    domNoData: '<div class="dropload-noData">暂无数据</div>'
+                },
+                loadUpFn: function (me) {
+                    /*重置页码数*/
+                    _$pageno = 1;
+                    $.ajax({
+                        type: 'GET',
+                        url: getAPIURL() + "user/roll-in-list?page=" + _$pageno,
+                        dataType: "json",
+                        data: null,
+                        success: function (res) {
+                            console.log(res);
+                            var list = res.data.lists;
+                            var content = "";
+
+                            if (list.length <= 0) {
+                                _$fund_details_wrap.html("<ul><li class='nothing'><p>暂无记录</p><div class='noInformation'><img src='../img/no_fund.png'></div></li></ul>");
+                            }
+                            else {
+                                for (var i = 0; i < list.length; i++) {
+                                    content += '<li class="income list_item">';
+                                    content += '<div><span>+' + list[i].point + '</span></div>' +
+                                        '<div><span>'+ list[i].status +'</span></div>' +
+                                        '<div  class="fund_details_money">' + list[i].pay_type + '</div>' +
+                                        '<div><span>' + list[i].create_time + '</span></div>' +
+                                        '</li>';
+                                }
+                                setTimeout(function () {
+                                    _$fund_details_list.html(content);
+                                    // 每次数据加载完，必须重置
+                                    dropload.resetload();
+                                }, 2000)
+                            }
+                        },
+                        error: function () {
+                            _$fund_details_wrap.html("<ul><li class='nothing'><p>暂无记录</p><div class='noInformation'><img src='../img/no_fund.png'></div></li></ul>");
+                            // 即使加载出错，也得重置
+                            dropload.resetload();
+                        },
+                        headers: {
+                            "Authorization": "Bearer " + localStorage.getItem('access_token')
+                        }
+                    });
+                },
+                loadDownFn: function (me) {
+                    _$pageno++;
+                    $.ajax({
+                        type: 'GET',
+                        url: getAPIURL() + "user/roll-in-list?page=" + _$pageno,
+                        dataType: 'json',
+                        data: null,
+                        success: function (res) {
+                            console.log(res);
+                            var list = res.data.lists;
+                            var content = "";
+                            if (list.length <= 0) {
+                                dropload.noData(true);
+                                dropload.resetload();
+                            }
+                            else {
+                                for (var i = 0; i < list.length; i++) {
+                                    content += '<li class="income list_item">';
+                                    content += '<div><span>+' + list[i].point + '</span></div>' +
+                                        '<div><span>'+ list[i].status +'</span></div>' +
+                                        '<div  class="fund_details_money">' + list[i].pay_type + '</div>' +
+                                        '<div><span>' + list[i].create_time + '</span></div>' +
+                                        '</li>';
+                                }
+                                _$fund_details_list.append(content);
+                                // 每次数据加载完，必须重置
+                                dropload.resetload();
+                            }
+                        },
+                        error: function (xhr, type) {
+                            /*加载到最后没有数据*/
+                            if (_$pageno == 1) {
+                                _$fund_details_wrap.html("<ul><li class='nothing'><p>暂无记录</p><div class='noInformation'><img src='../img/no_fund.png'></div></li></ul>");
+                            } else {
+                                dropload.noData(true);
+                            }
+
+                            // 即使加载出错，也得重置
+                            dropload.resetload();
+                        },
+                        headers: {
+                            "Authorization": "Bearer " + localStorage.getItem('access_token')
+                        }
+                    });
+                }
+            });
+        })();
+    }
+
+    var fundList;
+    $(function () {
+        fundList = new FundList();
+    });
+</script>
+</html>
